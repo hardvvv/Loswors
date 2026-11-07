@@ -55,8 +55,25 @@ The operating logic assumes that any MASTER PASS will always trigger file decryp
 
 
 
+# Installation & Download
+
+`Windows 10 tested only`
+
+You can download the Windows installer using either of the following sources:
+* [`Releases`](https://github.com/hardvvv/Loswors/releases)
+* [`Itch.io`](https://hard-vvv.itch.io/loswors)
+
+### Executable Behavior
+The `single .exe` file generated from the build or provided by the installer must operate in its own directory. On its first run, it creates several files and folders around itself strictly inside the folder where it is located. If you use the installer, this is handled automatically along with `registering` the `file extension` in Windows.
+
+`DO NOT` keep any other files in this folder, as the uninstaller completely wipes it upon removal, while also `removing` the `file extension` from the Windows registry.
+
+
+
+
+
 # Notes
-The program is written in C++, `AI` was used only in auxiliary functions.
+The program is written in `C++` & built with `CMake` and was developed using `Visual Studio 2022`, `AI` was used only in auxiliary functions.
 
 `Windows 10 tested only`
 
