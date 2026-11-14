@@ -1,9 +1,13 @@
 #define lwrsName "Loswors"
-#define lwrsVersion "1.0.0"
+#define lwrsVersion "1.0.1"
 #define lwrsExeName "Loswors.exe"
 #define lwrsFormat "lwrs"
+#define lwrsFormatTMP "lwrsTEMP"
 
-#define lwrsInstallerName "Loswors_WIN_Installer_v1.0.0"
+
+#define lwrsSourceName "Loswors_v1.0.1"
+#define lwrsInstallerName "Loswors_WIN_Installer_v1.0.1"
+
 
 [Setup]
 ; In PowerShell: [guid]::NewGuid() 
@@ -27,7 +31,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ; Only one installation file
-Source: "build_source\Loswors_v1.0.0.exe"; DestDir: "{app}"; DestName: "{#lwrsExeName}"; Flags: ignoreversion
+Source: "build_source\{#lwrsSourceName}.exe"; DestDir: "{app}"; DestName: "{#lwrsExeName}"; Flags: ignoreversion
 
 [Icons]
 ; Shortcut in the Start menu
@@ -60,6 +64,17 @@ Root: HKCU; Subkey: "Software\Classes\.{#lwrsFormat}"; \
     ValueData: "{#lwrsName}.SaveFile"; \
     Flags: uninsdeletevalue uninsdeletekeyifempty
 Root: HKCU; Subkey: "Software\Classes\.{#lwrsFormat}\OpenWithProgids"; \
+    ValueType: string; \
+    ValueName: "{#lwrsName}.SaveFile"; \
+    ValueData: ""; \
+    Flags: uninsdeletevalue
+    
+; 1.5 register .lwrsTEMP
+Root: HKCU; Subkey: "Software\Classes\.{#lwrsFormatTMP}"; \
+    ValueType: string; ValueName: ""; \
+    ValueData: "{#lwrsName}.SaveFile"; \
+    Flags: uninsdeletevalue uninsdeletekeyifempty
+Root: HKCU; Subkey: "Software\Classes\.{#lwrsFormatTMP}\OpenWithProgids"; \
     ValueType: string; \
     ValueName: "{#lwrsName}.SaveFile"; \
     ValueData: ""; \

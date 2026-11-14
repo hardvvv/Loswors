@@ -4,6 +4,9 @@
 #include <format>
 #include <algorithm>
 
+#include <thread> // | for rename file double try
+#include <chrono> // |_____________
+
 #include "license_s.hpp"
 
 #include "../UI/UI.hpp"
@@ -36,8 +39,8 @@ namespace {
 			constexpr char OldDelDone[]			= "[ Save Sys ] >> Old file delete DONE";
 			constexpr char OldDelErr_FT[]		= "[ Save Sys ] >> Old file delete Error: {}";
 
-			constexpr char TmpRnmDone[]			= "[ Save Sys ] >> TEMP file rename DONE";
-			constexpr char TmpRnmErr_FT[]		= "[ Save Sys ] >> TEMP file rename Error: {}";
+			constexpr char TmpRnmDone_FT[]		= "[ Save Sys ] >> TEMP file rename DONE after {} attempt";
+			constexpr char TmpRnmErr_2FT[]		= "[ Save Sys ] >> TEMP file rename Error after {} attempt: {}";
 
 			constexpr char TmpFirstDelDone[]	= "[ Save Sys ] >> TEMP First file delete DONE";
 			constexpr char TmpFirstDelErr_FT[]	= "[ Save Sys ] >> TEMP First file delete Error: {}";
@@ -50,6 +53,8 @@ namespace {
 
 			constexpr char OkCreate_FT[]		= "[ Save Sys ] >> Successfully created file at path: {}";
 			constexpr char ErrCreate_FT[]		= "[ Save Sys ] >> Error Write Data To File | Error: {}";
+
+			constexpr char ErrZeroData[]		= "[ Save Sys ] >> Error Save data size is 0, possibly not enough RAM";
 		}
 		// path combine
 		namespace PthComb {
@@ -517,10 +522,24 @@ namespace {
 				Log::add(ltxt::ss::OldDelDone, L_INFO) :
 				Log::add(std::format(ltxt::ss::OldDelErr_FT, FileSys::GetStatusTEXTen(st)), L_ERROR);
 
-			st = FileSys::rename_file(TEMPpath, NormPath);
-			(st == FileSys::Status::Success) ?
-				Log::add(ltxt::ss::TmpRnmDone, L_OK) :
-				Log::add(std::format(ltxt::ss::TmpRnmErr_FT, FileSys::GetStatusTEXTen(st)), L_ERROR);
+			const int MAX_TRY = 3;
+			int iter = 1;
+			bool is_rename = false;
+			for (int i = 0; i < MAX_TRY; ++i, ++iter) {
+				st = FileSys::rename_file(TEMPpath, NormPath);
+				if (st == FileSys::Status::Success) {
+					is_rename = true;
+					break;
+				}
+				std::this_thread::sleep_for(std::chrono::milliseconds(32)); // 2 frame
+			}
+
+			if (is_rename) {
+				Log::add(std::format(ltxt::ss::TmpRnmDone_FT, iter), L_OK);
+			}
+			else {
+				Log::add(std::format(ltxt::ss::TmpRnmErr_2FT, MAX_TRY, FileSys::GetStatusTEXTen(st)), L_ERROR);
+			}
 		};
 		auto DEL_F = [&](const std::string& NormPath) {
 			
@@ -574,6 +593,11 @@ namespace {
 		// --------------------------------------------------------------------------------------------
 
 		TEMP_GFILE_DATA = LwrsFileUnit::GetDataForSave(TEMP_GFILE_DATA_SIZE, PIN, PASS, PASS_size);
+		if (TEMP_GFILE_DATA == nullptr || TEMP_GFILE_DATA_SIZE == 0) {
+			clearTEMP();
+			Log::add(ltxt::ss::ErrZeroData, L_ERROR);
+			return false;
+		}
 
 		// ---------------------------------
 		//		If Need BIN SHUFFLE    &&    SAVE IN FILE

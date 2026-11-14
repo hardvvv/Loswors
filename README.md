@@ -2,10 +2,10 @@
 
 
 
-`Version 1.0.0`
+`Version 1.0.1`
 - 1 `MAJOR` - for big changes
 - 0 `MINOR` - breaking changes in file format or file loading logic (includes conversion)
-- 0 `PATCH` - simple updates, bug fix
+- 1 `PATCH` - simple updates, bug fix
 
 About version: `MINOR` - (file format) never resets to 0, `PATCH` - (update, bug fix) reset to 0 if `MAJOR` changes.
 

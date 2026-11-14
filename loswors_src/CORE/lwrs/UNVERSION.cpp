@@ -423,7 +423,7 @@ namespace UNVERSION {
 				SecureWipe(DATA, DATAsz);
 				delete[] DATA; DATA = nullptr;
 				new_data_size = 0;
-				return;
+				return; // only for check
 			}
 			new_data_size = DATAsz;
 		};

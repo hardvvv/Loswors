@@ -7,10 +7,17 @@
 # my ignore
 /*
 !/loswors_src/
+!/loswors_src/**
 !/py_help/
+!/py_help/**
 !/licenses/
+!/licenses/**
 !/readme_design/
+!/readme_design/**
 !/additional_src/
+!/additional_src/**
+!/tests/
+!/tests/**
 !/.gitattributes
 !/.gitignore
 !/LICENSE.txt

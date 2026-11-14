@@ -3,7 +3,9 @@
 
 #include <cmath>
 
+
 #include "../../CORE/Log.hpp"
+#include "../../CORE/Terminal/Comand.hpp"
 
 #include "../../Localization/LocalSys.hpp"
 #include "../../Localization/loc.hpp"
@@ -728,7 +730,11 @@ namespace {
 
 		GuiSetStyle(BUTTON, TEXT_COLOR_NORMAL, ColorToInt(BLUE));
 		if (UI_Obj::BTN_Text_FitCenter(gitbtn_z, "GitHub", font, 0.2f)) {
-			OpenURL(Const::PROGRAM_GITURL);
+			
+			OpenUrlSafe(Const::PROGRAM_GITURL);
+
+			//OpenURL(Const::PROGRAM_GITURL); // it work in 1.0.0 but now it nor work.. idk why
+			
 			//SetClipboardText(Const::PROGRAM_GITURL);
 			//NotifService::AddMessage(MType::M_NORMAL, loc::t.notif.copydone0, loc::t.notif.copydone1);
 		}

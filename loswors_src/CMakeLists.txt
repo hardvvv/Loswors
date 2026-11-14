@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 if (WIN32)
-    set(WIN_RESOURCES resource.rc)      # icon
+    set(WIN_RESOURCES resource.rc) # icon
 endif()
 
 
@@ -54,6 +54,8 @@ add_executable(${PROJECT_NAME} WIN32 # com for terminal
     "CORE/lwrs/Encryption/XOR_Shuffle.hpp"      "CORE/lwrs/Encryption/XOR_Shuffle.cpp"
     # CORE MonoProg
     "CORE/MonoProg/MonoProg.hpp"                "CORE/MonoProg/MonoProg.cpp"
+    # CORE Terminal
+    "CORE/Terminal/Comand.hpp"                  "CORE/Terminal/Comand.cpp"
     # CORE Timer
     "CORE/Timer/timer.hpp"                      "CORE/Timer/timer.cpp"
 

@@ -17,8 +17,8 @@ namespace Const {
 	constexpr char		AUTHOR_NAME[9]				= "HARD_VVV";
 
 	constexpr char		PROGRAM_NAME[8]				= "Loswors";
-	constexpr char		LOSWORS_VERSION_TXT[14]		= "Version 1.0.0";
-	constexpr uint16_t	LOSWORS_VERSION_INT[3]		= { 1, 0, 0 };
+	constexpr char		LOSWORS_VERSION_TXT[14]		= "Version 1.0.1";
+	constexpr uint16_t	LOSWORS_VERSION_INT[3]		= { 1, 0, 1 };
 
 	constexpr char		PROGRAM_GITURL[35]			= "https://github.com/hardvvv/Loswors";
 
